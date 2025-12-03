@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}{{ county }} County - Monitoring Sites{% endblock %}
+
+{% block content %}
+<h1>Monitoring Sites in {{ county }} County</h1>
+<div class="site-list">
+    {% if sites %}
+        {% for site in sites %}
+            <div class="site-card {% if not site.has_data %}no-data{% endif %}">
+                <a href="/data?site={{ site.site_no }}&county={{ county }}">
+                    <strong>{{ site.station_nm }}</strong><br>
+                    <small>Site {{ site.site_no }}</small>
+                    {% if not site.has_data %}
+                        <span class="data-status">No real-time data available</span>
+                    {% endif %}
+                </a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No active sites found in this county.</p>
+    {% endif %}
+</div>
+
+{% if total_pages > 1 %}
+<div class="pagination">
+    {% if page > 1 %}
+        <a href="?county={{ county }}&page={{ page - 1 }}">Previous</a>
+    {% endif %}
+    {% for p in range(1, total_pages + 1) %}
+        {% if p == page %}
+            <span class="current">{{ p }}</span>
+        {% else %}
+            <a href="?county={{ county }}&page={{ p }}">{{ p }}</a>
+        {% endif %}
+    {% endfor %}
+    {% if page < total_pages %}
+        <a href="?county={{ county }}&page={{ page + 1 }}">Next</a>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

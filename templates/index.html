@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}California Water Data - USGS{% endblock %}
+
+{% block content %}
+<div class="center">
+    <h1>California Water Monitoring</h1>
+    <p>Real-time data from USGS Water Data for the Nation</p>
+    <form method="GET" action="/locations">
+        <input list="counties" name="county" placeholder="Type or select a county..." required>
+        <datalist id="counties">
+            {% for c in counties %}
+                <option value="{{ c }}">
+            {% endfor %}
+        </datalist>
+        <button type="submit">Go</button>
+    </form>
+</div>
+{% endblock %}

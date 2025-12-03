@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Available Data for {{ station_name }}{% endblock %}
+
+{% block content %}
+<h1>Available Data for {{ station_name }}</h1>
+<p class="site-id">Site Number: {{ site_no }}</p>
+
+{% if parameters %}
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Parameter</th>
+            <th>Latest Value</th>
+            <th>Unit</th>
+            <th>Time (PST/PDT)</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in parameters %}
+        <tr>
+            <td>{{ p.parameter }} ({{ p.code }})</td>
+            <td><strong>{{ p.value }}</strong></td>
+            <td>{{ p.unit }}</td>
+            <td>{{ p.timestamp }}</td>
+            <td><span class="status {{ 'provisional' if p.status == 'Provisional' else 'approved' }}">{{ p.status }}</span></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No real-time data available for this site in the last 7 days.</p>
+{% endif %}
+{% endblock %}

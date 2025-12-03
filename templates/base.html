@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}USGS California Water Data{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="nav-breadcrumbs">
+            <a href="/">Home</a>
+            {% if county %}
+            <span>></span>
+            <a href="/locations?county={{ county }}">{{ county }} County</a>
+            {% if station_name %}
+            <span>></span>
+            <a href="#">{{ station_name }}</a>
+            {% endif %}
+            {% endif %}
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>Data provided by <a href="https://waterdata.usgs.gov/ca/nwis/rt" target="_blank">USGS Water Data for California</a></p>
+    </footer>
+</body>
+</html>
